@@ -11,3 +11,5 @@ Screenshots of the Application
 ------------------------------
 
 ![alt text](https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/Cards.png?raw=true)
+![alt text](https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/timeline.png?raw=true)
+
