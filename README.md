@@ -10,6 +10,9 @@ Steps
 Screenshots of the Application
 ------------------------------
 
+1. The Home page which lists all the pools
 ![alt text](https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/Cards.png?raw=true)
+
+2. The timeline for delegation in each pools
 ![alt text](https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/timeline.png?raw=true)
 
