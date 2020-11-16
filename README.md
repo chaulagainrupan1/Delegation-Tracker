@@ -10,4 +10,4 @@ Steps
 Screenshots of the Application
 ------------------------------
 
-![alt text] (https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/Cards.png)
+![alt text] (https://github.com/chaulagainrupan1/Delegation-Tracker/blob/main/Screenshots/Cards.png?raw=true)
