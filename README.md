@@ -1,8 +1,6 @@
 # Delegation-Tracker
 Tracks the total delegate in staking pools daily. The information of the staking pools are provided by the API.
 
-# How to run the project?
-
 Steps
 ====
 1. Clone the project
