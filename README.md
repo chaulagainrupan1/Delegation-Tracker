@@ -5,6 +5,7 @@ Steps
 ====
 1. Clone the project
 2. "npm install" to install all the required libraries
+3. Use your own endpoints and modify the code accordingly
 3. Run "npm run"
 
 Screenshots of the Application
