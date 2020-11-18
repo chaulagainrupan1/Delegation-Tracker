@@ -10,6 +10,8 @@ export default class TimelineMain extends Component {
 
     state = {
         stakes: [],
+        loading: true,
+        message: "Loading timeline..."
     }
 
 
@@ -45,14 +47,23 @@ export default class TimelineMain extends Component {
                 if(res.data.data[j].transaction.block.forgedAt.substring(0,10) === res.data.data[i].transaction.block.forgedAt.substring(0,10)){
                     totalDelegation += res.data.data[i].transaction.deposit
 
-                    address.push(res.data.data[i].address)
+                    if (address.find(function(element){
+                        return element === res.data.data[i].address
+                    }) === undefined){
+                        address.push(res.data.data[i].address)
+                    }
+                   
                 }
 
                 if((res.data.data[j].transaction.block.forgedAt.substring(0,10) !== res.data.data[i].transaction.block.forgedAt.substring(0,10)) || (i === res.data.data.length-1))
                 {
                     totalDelegation += res.data.data[i].transaction.deposit
 
-                    address.push(res.data.data[i].address)
+                    if (address.find(function(element){
+                        return element === res.data.data[i].address
+                    }) === undefined){
+                        address.push(res.data.data[i].address)
+                    }
 
                     this.setState({
                         stakes: [
@@ -72,18 +83,22 @@ export default class TimelineMain extends Component {
             }
             
         })
+        .finally(a =>{
+            this.setState({
+                loading: false
+            })
+        })
     }
     
-    
+   
+
     
 
     render() {
-        //console.log(this.props,this.state);
-        return (
-            <div>
-                <div style={{display:"flex", justifyContent:"center"}}>
-                    <h1>{this.props.location.state.pool.name}</h1>
-                </div>            
+        let TimelineList = this.state.loading ? <div style={{flex:1,justifyContent: "center",alignItems: "center"}}>
+        <h2 style={{textAlign:"center"}}>{this.state.message}</h2>
+        </div>:
+        <div>            
                     <Timeline lineColor={"#ddd"}>
                     {this.state.stakes.map(stake => {
 
@@ -115,6 +130,13 @@ export default class TimelineMain extends Component {
                 <div>
                     
                 </div>
+        </div>
+        return (
+            <div style={{flex:1}}>
+                <div style={{display:"flex", justifyContent:"center"}}>
+                    <h1>{this.props.location.state.pool.name}</h1>
+                </div>
+                {TimelineList}
             </div>
         )
     }
