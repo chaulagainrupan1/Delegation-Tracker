@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './cardStyle.css';
+import { Spinner } from 'react-bootstrap';
 
 
 let colors = [
@@ -48,8 +49,15 @@ const Card1 = ({pools, history}) => {
       </div>
     );
   }):(
-    <div>
-       <h2>Loading...</h2>
+    <div style={{display:"flex",justifyContent: "center",alignItems: "center", height: "700px"}}>
+      <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+        <Spinner
+        animation="border"
+        variant="primary" 
+        role="status">
+        </Spinner>
+        <h2 style={{paddingLeft: 16}}>Loading...</h2>
+  </div>
     </div>
   );
 

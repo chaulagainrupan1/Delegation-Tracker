@@ -4,6 +4,7 @@ import { Timeline, TimelineItem }  from 'vertical-timeline-component-for-react';
 import axios from "../services/ApiCalls";
 
 import "./timelineStyle.css";
+import { Spinner } from 'react-bootstrap';
 
 
 export default class TimelineMain extends Component {
@@ -21,6 +22,7 @@ export default class TimelineMain extends Component {
         axios.get(`/pools/${this.props.location.state.pool.pool_hash}/delegations`)
         .then( res => {
 
+            console.log(res.data.data);
             // variable i is for iteration over the array
             // j is basically a tracker which determines if
             // the date in the consecutive array element is different
@@ -95,8 +97,16 @@ export default class TimelineMain extends Component {
     
 
     render() {
-        let TimelineList = this.state.loading ? <div style={{flex:1,justifyContent: "center",alignItems: "center"}}>
-        <h2 style={{textAlign:"center"}}>{this.state.message}</h2>
+        let TimelineList = this.state.loading ? <div style={{display:"flex",justifyContent: "center",alignItems: "center", height: "700px"}}>
+        {/*<h2 style={{textAlign:"center"}}>{this.state.message}</h2> */}
+        <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+            <Spinner
+            animation="border"
+            variant="primary" 
+            role="status">
+            </Spinner>
+            <h2 style={{paddingLeft: 16}}>{this.state.message}</h2>
+        </div>
         </div>:
         <div>            
                     <Timeline lineColor={"#ddd"}>
