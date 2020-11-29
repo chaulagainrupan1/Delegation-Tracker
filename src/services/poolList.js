@@ -1,4 +1,8 @@
 import axios from "./ApiCalls";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 let pools = [];
 let allPools = [];
@@ -23,12 +27,18 @@ export async function totalElementsinPool(hash){
     .then(response => {
         return response.data.page.totalElementCount
     })
+    .catch(err=>{
+    toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
+    })
 }
 
 export async function poolHashes(address) {
     StakesinaPool = await axios.get(`/stakes/${address}/delegations`)
     .then(response => {
         return response.data.data[0].stakePool.hash
+    })
+    .catch(err => {
+    toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
     })
     return StakesinaPool
 }
@@ -38,6 +48,9 @@ export async function currentPool(address){
     .then(response => {
         return response.data.data
     })
+    .catch(err => {
+    toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
+    })
     return currentPool
 }
 
@@ -45,6 +58,9 @@ export async function registrations(address){
     let registrated = await axios.get(`/stakes/${address}/registration`)
     .then(response => {
         return response.data.data.transaction.block.forgedAt.substring(0,10) + ", " + response.data.data.transaction.block.forgedAt.substring(11,16);
+    })
+    .catch(err=>{
+    toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
     })
     return registrated
 }
@@ -60,6 +76,9 @@ export async function poolFind(hash) {
             }
         }
     )
+    .catch(err => {
+    toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
+    })
     return poolName
 }
 

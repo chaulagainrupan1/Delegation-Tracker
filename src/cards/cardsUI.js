@@ -56,6 +56,7 @@ const Card1 = ({pools, history}) => {
       <div key={pool.pool_hash}
        style={{padding:16,width:"25%"}}>
         <Card
+        key={index}
         bg={colors[index%7]}
         text={colors[index%7] === 'dark' ? "light": "dark"}
         style={{height:"100%",justifyContent:"center"}}>

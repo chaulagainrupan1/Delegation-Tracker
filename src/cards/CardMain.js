@@ -19,7 +19,6 @@ export default class CardMain extends Component {
         loading: false,
         error: false,
         errorMessage: "",
-        filteredName: []
     }
 
     async componentDidMount(){
@@ -37,7 +36,6 @@ export default class CardMain extends Component {
         error:false,
         message: "Loading..."
         }, () => {
-        this.NameFiltered()
         if (poolsUnite && isMounted){
             this.setState({
                 loading: false
@@ -55,22 +53,22 @@ export default class CardMain extends Component {
     }
     }
     // removing symbols and images from pools name for searching
-    NameFiltered = () => {
-    let tempVariable=''
-    let names = []
-    let castString;
-    for(let i=0; i< this.state.Pools.length; i++){
-    tempVariable = ''
-    castString = String(this.state.Pools[i].name)
-    for(let j =0; j < castString.length;j++){
-        if((castString[j] >= 'A'&& castString[j] <='Z') || (castString[j] >= 'a' && castString[j]<='z')){
-        tempVariable += castString[j]
-        }
-    }
-    names.push(tempVariable)
-    }
-    this.setState({filteredName: names})
-    }
+    // NameFiltered = () => {
+    // let tempVariable=''
+    // let names = []
+    // let castString;
+    // for(let i=0; i< this.state.Pools.length; i++){
+    // tempVariable = ''
+    // castString = String(this.state.Pools[i].name)
+    // for(let j =0; j < castString.length;j++){
+    //     if((castString[j] >= 'A'&& castString[j] <='Z') || (castString[j] >= 'a' && castString[j]<='z')){
+    //     tempVariable += castString[j]
+    //     }
+    // }
+    // names.push(tempVariable)
+    // }
+    // this.setState({filteredName: names})
+    // }
 
 
     // the function is for search method
@@ -78,7 +76,7 @@ export default class CardMain extends Component {
     searchTrigger = (search) => {
         Search = search.toLowerCase();
         SearchList = this.state.Pools.filter((e,index,)=> {
-            if (this.state.filteredName[index].toLowerCase().includes(Search)){
+            if (String(e.name).toLowerCase().includes(Search)){
                 this.setState({
                     loading: false
                 })

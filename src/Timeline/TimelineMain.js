@@ -10,6 +10,11 @@ import { Spinner } from 'react-bootstrap';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
+
 
 export default class TimelineMain extends Component {
 
@@ -62,6 +67,9 @@ export default class TimelineMain extends Component {
         this.setState({
         loading: false
         })
+        })
+        .catch(err => {
+        toast.error(err.message,{position: toast.POSITION.TOP_CENTER})
         })
     }
 
