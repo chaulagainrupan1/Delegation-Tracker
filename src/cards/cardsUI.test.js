@@ -5,6 +5,8 @@ import { act } from 'react-dom/test-utils';
 import {BrowserRouter, MemoryRouter, Route, Switch } from "react-router-dom";
 import { shallow, Enzyme } from "enzyme";
 import renderer from 'react-test-renderer';
+import {mount} from 'enzyme';
+import CardMain from "./CardMain.js";
 
 
 let container = null;
@@ -36,12 +38,5 @@ it("should render correctly with given object", () => {
   expect(component).toMatchSnapshot();
 })
 
-// it("renders with pool name", ()=>{
 
-//     act(()=> {
-//         const mProps = {pools: {}};
-//         const wrapper = shallow(<BrowserRouter><Card1 {...mProps}/></BrowserRouter>).dive();
-//         expect(wrapper.find('h2').text()).toEqual('Loading...');
-//     });
-//     expect(container.textContent).toBe(pools.name);
-// })
+

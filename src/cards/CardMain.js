@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import Card1 from './cardsUI.js';
 import Searchbar from "../search/Searchbar.js";
-
-
-
-import axios from "../services/ApiCalls.js";
+import {poolList, poolsUnite} from "../services/poolList";
 
 // searchlist is to store the search result
 // Search Variable is to store the search input
 let SearchList = [];
 let Search = "";
-
 let isMounted = true;
 
 
@@ -20,42 +16,69 @@ export default class CardMain extends Component {
 
     state = {
         Pools : [],
-        loading: false
+        loading: false,
+        error: false,
+        errorMessage: "",
+        filteredName: []
     }
 
-    componentDidMount(){
-        axios.get('/pools')
-        .then (res => {
-                //console.log(res.data.data);
-                this.setState({
-                    Pools: res.data.data,
-                    loading: true,
-                    message: "Loading..."
-                },()=>{
-                    if (res && isMounted){
-                        this.setState({
-                            loading: false
-                        });
-                    }
-                })
-            }
-        )
-        .catch(err=>{
-            console.log(err)
+    async componentDidMount(){
+        try{
+        let index=  [];
+        for(let i=2; i<= 22; i++){
+         index.push(i)
+        }
+        await Promise.all(index.map(async i => {
+            await poolList(i)
+        }))
+        this.setState({
+        Pools: poolsUnite,
+        loading: true,
+        error:false,
+        message: "Loading..."
+        }, () => {
+        this.NameFiltered()
+        if (poolsUnite && isMounted){
+            this.setState({
+                loading: false
+            });
+        }
         })
     }
-
-    
+    catch(err){
+        this.setState({
+            error: true,
+            errorMessage: err.message,
+            loading: false
+        })
+        console.log(err.message);
+    }
+    }
+    // removing symbols and images from pools name for searching
+    NameFiltered = () => {
+    let tempVariable=''
+    let names = []
+    let castString;
+    for(let i=0; i< this.state.Pools.length; i++){
+    tempVariable = ''
+    castString = String(this.state.Pools[i].name)
+    for(let j =0; j < castString.length;j++){
+        if((castString[j] >= 'A'&& castString[j] <='Z') || (castString[j] >= 'a' && castString[j]<='z')){
+        tempVariable += castString[j]
+        }
+    }
+    names.push(tempVariable)
+    }
+    this.setState({filteredName: names})
+    }
 
 
     // the function is for search method
     // upon search, this function is called and the state of the pools is changed
     searchTrigger = (search) => {
-
         Search = search.toLowerCase();
-
-        SearchList = this.state.Pools.filter((e)=> {
-            if (e.name.toLowerCase().includes(Search)){
+        SearchList = this.state.Pools.filter((e,index,)=> {
+            if (this.state.filteredName[index].toLowerCase().includes(Search)){
                 this.setState({
                     loading: false
                 })
@@ -66,7 +89,7 @@ export default class CardMain extends Component {
         if (SearchList.length === 0){
             this.setState({
                 loading: true,
-                message: "No pools found"
+                message: "No pools found!"
             })
         }
     }
@@ -75,6 +98,8 @@ export default class CardMain extends Component {
     render() {
         return (
             <div>
+            {this.state.error ? <div className="d-flex justify-content-center">{this.state.errorMessage}</div>:
+                <div id="mainId">
                 <Searchbar trigger={this.searchTrigger}/>
                 { this.state.loading ?
                  <div className="d-flex justify-content-center">{this.state.message}</div>   
@@ -82,7 +107,10 @@ export default class CardMain extends Component {
                    {Search === "" ? <Card1 pools={this.state.Pools}/> : <Card1 pools={SearchList}/> }
                 </div>
                 }
+                </div>
+            }
             </div>
         )
     }
 }
+

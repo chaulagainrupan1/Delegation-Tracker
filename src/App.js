@@ -1,7 +1,8 @@
 import CardMain from './cards/CardMain.js';
 import TimelineMain from "./Timeline/TimelineMain.js";
 
-import {BrowserRouter, Route, Switch } from "react-router-dom";
+
+import {BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 function App() {
   return (

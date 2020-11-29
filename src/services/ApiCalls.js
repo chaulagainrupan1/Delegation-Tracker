@@ -2,9 +2,10 @@ const axios = require('axios');
 
 
 const instance = axios.create({
-    baseURL: 'https://cors-anywhere.herokuapp.com/https://api.dev.ada.sireto.io',
+    baseURL: '[Base_URL_here]',
     headers: {
         'Access-Control-Allow-Origin': true,
+        //"X-Requested-With": "XMLHttpRequest"
     }
   });
 

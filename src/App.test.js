@@ -24,5 +24,5 @@ it("renders without crashing", ()=>{
     render(
       <BrowserRouter> <App/> </BrowserRouter>, container);
   });
-  expect(container.textContent).toBe("");
+  expect(container.textContent);
 })
