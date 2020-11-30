@@ -10,6 +10,7 @@ let poolsUnite = [];
 let StakesinaPool;
 let poolName;
 let totalElements = 0;
+let totalPoolsNumber = 0;
 
 export async function poolList(page) {
     pools = await axios.get(`/pools?page=${page}&size=100`)
@@ -20,6 +21,14 @@ export async function poolList(page) {
     for(let i =0 ; i< pools.length; i++){
     poolsUnite.push(pools[i])
     }
+}
+
+export async function totalPools() {
+    totalPoolsNumber = await axios.get(`/pools`)
+    .then (res => {
+            return res.data.data.totalElementCount
+        }
+    )
 }
 
 export async function totalElementsinPool(hash){
@@ -82,7 +91,7 @@ export async function poolFind(hash) {
     return poolName
 }
 
-export {pools, allPools, poolsUnite}
+export {pools, allPools, poolsUnite, totalPoolsNumber}
 
 
 

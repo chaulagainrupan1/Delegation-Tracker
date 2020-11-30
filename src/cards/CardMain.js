@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Card1 from './cardsUI.js';
 import Searchbar from "../search/Searchbar.js";
-import {poolList, poolsUnite} from "../services/poolList";
+import {poolList, poolsUnite, totalElementsinPool, totalElements} from "../services/poolList";
+import {search} from "./utils";
 
 // searchlist is to store the search result
 // Search Variable is to store the search input
-let SearchList = [];
-let Search = "";
+let SearchList;
 let isMounted = true;
+let Uppere = "";
 
 
 
@@ -19,10 +20,12 @@ export default class CardMain extends Component {
         loading: false,
         error: false,
         errorMessage: "",
+        SearchList:[]
     }
 
     async componentDidMount(){
         try{
+        //await totalElementsinPool()
         let index=  [];
         for(let i=2; i<= 22; i++){
          index.push(i)
@@ -52,44 +55,24 @@ export default class CardMain extends Component {
         console.log(err.message);
     }
     }
-    // removing symbols and images from pools name for searching
-    // NameFiltered = () => {
-    // let tempVariable=''
-    // let names = []
-    // let castString;
-    // for(let i=0; i< this.state.Pools.length; i++){
-    // tempVariable = ''
-    // castString = String(this.state.Pools[i].name)
-    // for(let j =0; j < castString.length;j++){
-    //     if((castString[j] >= 'A'&& castString[j] <='Z') || (castString[j] >= 'a' && castString[j]<='z')){
-    //     tempVariable += castString[j]
-    //     }
-    // }
-    // names.push(tempVariable)
-    // }
-    // this.setState({filteredName: names})
-    // }
-
 
     // the function is for search method
     // upon search, this function is called and the state of the pools is changed
-    searchTrigger = (search) => {
-        Search = search.toLowerCase();
-        SearchList = this.state.Pools.filter((e,index,)=> {
-            if (String(e.name).toLowerCase().includes(Search)){
-                this.setState({
-                    loading: false
-                })
-                return e
-            } 
-        })
+    searchTrigger = async (e) => {
+
+        Uppere = e.toLowerCase();
+        let resultPool = await search(`https://api.dev.ada.sireto.io/pools?q=${Uppere}`)
+
+        SearchList = resultPool
+
+        this.setState({loading: false})
 
         if (SearchList.length === 0){
-            this.setState({
-                loading: true,
-                message: "No pools found!"
-            })
-        }
+        this.setState({
+        loading: true,
+        message:"No pools found"
+        })
+        }   
     }
 
 
@@ -102,7 +85,7 @@ export default class CardMain extends Component {
                 { this.state.loading ?
                  <div className="d-flex justify-content-center">{this.state.message}</div>   
                 :<div>
-                   {Search === "" ? <Card1 pools={this.state.Pools}/> : <Card1 pools={SearchList}/> }
+                   {Uppere === "" ? <Card1 pools={this.state.Pools}/> : <Card1 pools={SearchList}/> }
                 </div>
                 }
                 </div>
