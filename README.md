@@ -1,5 +1,5 @@
 # Delegation-Tracker
-Tracks the total delegate in staking pools daily. The information of the staking pools are provided by the API.
+Tracks the daily total delegation in a staking pools and the information of the delegators.
 
 Steps
 ====

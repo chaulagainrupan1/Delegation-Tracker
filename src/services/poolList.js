@@ -24,9 +24,9 @@ export async function poolList(page) {
 }
 
 export async function totalPools() {
-    totalPoolsNumber = await axios.get(`/pools`)
+    totalPoolsNumber = await axios.get('/pools')
     .then (res => {
-            return res.data.data.totalElementCount
+            return res.data.page.totalElementCount
         }
     )
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Card1 from './cardsUI.js';
 import Searchbar from "../search/Searchbar.js";
-import {poolList, poolsUnite, totalElementsinPool, totalElements} from "../services/poolList";
+import {poolList, poolsUnite, totalPools, totalPoolsNumber} from "../services/poolList";
 import {search} from "./utils";
 
 // searchlist is to store the search result
@@ -25,9 +25,9 @@ export default class CardMain extends Component {
 
     async componentDidMount(){
         try{
-        //await totalElementsinPool()
+        await totalPools()
         let index=  [];
-        for(let i=2; i<= 22; i++){
+        for(let i=1; i<= parseInt(totalPoolsNumber/100); i++){
          index.push(i)
         }
         await Promise.all(index.map(async i => {
