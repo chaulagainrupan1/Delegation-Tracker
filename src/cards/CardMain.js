@@ -61,7 +61,7 @@ export default class CardMain extends Component {
     searchTrigger = async (e) => {
 
         Uppere = e.toLowerCase();
-        let resultPool = await search(`https://api.dev.ada.sireto.io/pools?q=${Uppere}`)
+        let resultPool = await search(`[BASE_URL_HERE]/pools?q=${Uppere}`)
 
         SearchList = resultPool
 
